@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login | STACKLY</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* ===== ROOT ===== */
+:root{
+--primary:#A70FF9;
+--bg:#fff;
+--card:#ffffff;
+--text:#222;
+--gray:#666;
+}
+
+/* ===== GLOBAL ===== */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Plus Jakarta Sans',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#F7F0FF,#F7F0FF,#F7F0FF);
+color:#222;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+/* ===== PRELOADER ===== */
+#preloader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:#ffffff;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+}
+
+.loader-logo{
+width:120px;
+animation:spinLogo 2s ease-in-out infinite;
+}
+
+@keyframes spinLogo{
+0%{transform:scale(.8) rotate(0);opacity:.5}
+50%{transform:scale(1.1) rotate(180deg);opacity:1}
+100%{transform:scale(.8) rotate(360deg);opacity:.5}
+}
+
+/* ===== WRAPPER ===== */
+.auth-wrapper{
+width:100%;
+max-width:420px;
+}
+
+/* ===== BACK ===== */
+.back-home{
+display:flex;
+align-items:center;
+gap:8px;
+margin-bottom:20px;
+color:#666;
+text-decoration:none;
+font-size:14px;
+}
+
+.back-home:hover{
+color:var(--primary);
+}
+
+/* ===== CARD ===== */
+.auth-card{
+padding:40px;
+border-radius:20px;
+background:#fff;
+border:1px solid #eee;
+box-shadow:0 15px 40px rgba(167,15,249,.15);
+}
+
+/* ===== LOGO ===== */
+.auth-logo{
+text-align:center;
+margin-bottom:30px;
+}
+
+.auth-logo img{
+height:65px;
+}
+
+/* ===== ICON ===== */
+.logo-circle{
+width:70px;
+height:70px;
+margin:0 auto 15px;
+border-radius:50%;
+background:linear-gradient(135deg,#C084FC,#A70FF9);
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:24px;
+}
+
+/* ===== TITLE ===== */
+.auth-card h2{
+text-align:center;
+margin-bottom:10px;
+}
+
+.auth-sub{
+text-align:center;
+color:var(--gray);
+margin-bottom:25px;
+font-size:14px;
+}
+
+/* ===== INPUT ===== */
+.input-group{
+margin-bottom:18px;
+}
+
+.input-group label{
+display:block;
+margin-bottom:6px;
+font-size:13px;
+color:#555;
+}
+
+.input-group input,
+.input-group select{
+width:100%;
+padding:12px 14px;
+border-radius:10px;
+outline:none;
+background:#fff;
+color:#333;
+border:1px solid #ddd;
+}
+
+/* Professional dropdown spacing */
+.input-group select{
+padding-right:45px;
+cursor:pointer;
+}
+
+.input-group input:focus,
+.input-group select:focus{
+border-color:var(--primary);
+}
+
+/* ===== PASSWORD ===== */
+/* ===== PASSWORD WRAPPER ===== */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center; /* Keeps the icon vertically centered to the input */
+}
+
+.password-wrapper input {
+    padding-right: 40px; /* Make room so text doesn't go under the eye */
+}
+
+.password-wrapper span {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Ensures it stays centered regardless of external labels/errors */
+    z-index: 10;
+}
+
+.password-wrapper span:hover {
+    color: var(--primary);
+}
+
+/* ===== ERROR ===== */
+.error{
+color:var(--primary);
+font-size:12px;
+margin-top:5px;
+display:none;
+}
+
+/* ===== REMEMBER ===== */
+.remember-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+font-size:13px;
+color:#555;
+}
+
+.forgot-pass-link{
+color:#555;
+text-decoration:none;
+}
+
+.forgot-pass-link:hover{
+color:var(--primary);
+}
+
+/* ===== BUTTON ===== */
+.btn-primary{
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+background:#A70FF9;
+color:white;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+
+.btn-primary:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 30px rgba(167,15,249,.35);
+}
+
+/* ===== LINK ===== */
+.auth-link{
+text-align:center;
+margin-top:15px;
+font-size:14px;
+}
+
+.auth-link a{
+color:var(--primary);
+text-decoration:none;
+font-weight:600;
+}
+
+/* ===== DEMO ===== */
+.demo-box{
+margin-top:20px;
+background:#F7F0FF;
+padding:15px;
+border-radius:12px;
+border:1px solid rgba(167,15,249,.15);
+font-size:13px;
+color:#555;
+}
+
+.demo-box ul{
+margin-top:6px;
+padding-left:15px;
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:480px){
+.auth-card{
+padding:25px;
+}
+}
+
+/* PREMIUM LOGIN EFFECTS */
+
+.auth-card{
+    transition:all .35s ease;
+}
+
+.auth-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 20px 45px rgba(167,15,249,.22);
+}
+
+.logo-circle{
+    transition:all .35s ease;
+}
+
+.logo-circle:hover{
+transform:scale(1.08) rotate(8deg);
+box-shadow:0 15px 35px rgba(167,15,249,.35);
+}
+
+.btn-primary:hover{
+    transform:translateY(-4px) scale(1.02);
+}
+
+.input-group input:focus,
+.input-group select:focus{
+    box-shadow:0 0 0 4px rgba(167,15,249,.15);
+}
+
+.demo-box{
+    transition:all .3s ease;
+}
+
+.demo-box:hover{
+transform:translateY(-4px);
+border-color:#A70FF9;
+box-shadow:0 15px 35px rgba(167,15,249,.18);
+}
+
+.error{
+    color:#dc2626;
+    font-size:12px;
+    margin-top:5px;
+    display:none;
+    font-weight:600;
+}
+
+.input-group select{
+    width:100%;
+    padding:12px 50px 12px 14px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    background:#fff;
+
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 20 20'%3E%3Cpath fill='%23A70FF9' d='M5 7l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 18px center;
+    background-size:14px;
+}
+
+.remember-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+font-size:13px;
+color:#555;
+}
+
+.remember-row input[type="checkbox"]{
+    accent-color:#A70FF9;
+}
+
+input,
+textarea,
+select{
+    accent-color:#A70FF9;
+    caret-color:#A70FF9;
+}
+
+input:focus,
+select:focus{
+    background:#FFFFFF;
+}
+
+input:-webkit-autofill{
+-webkit-box-shadow:0 0 0 1000px #F7F0FF inset !important;
+}
+
+.custom-select{
+    position:relative;
+    width:100%;
+}
+
+.select-btn{
+    width:100%;
+    height:48px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:0 15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    cursor:pointer;
+    background:#fff;
+}
+
+.select-menu{
+    position:absolute;
+    top:100%;
+    left:0;
+    width:100%;
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:10px;
+    margin-top:6px;
+    display:none;
+    overflow:hidden;
+    z-index:999;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+.select-menu.show{
+    display:block;
+}
+
+.option{
+    padding:12px 15px;
+    cursor:pointer;
+}
+
+.option:hover{
+    background:#A70FF9;
+    color:#fff;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+<img src="assets/images/logo/stackly_logo.webp" class="loader-logo">
+</div>
+
+<div class="auth-wrapper">
+
+<a href="index.html" class="back-home">
+← Back to Home
+</a>
+
+<div class="auth-card">
+
+<div class="auth-logo">
+<img src="assets/images/logo/stackly_logo.webp">
+</div>
+
+<h2>Welcome Back</h2>
+<p class="auth-sub">Login to your Stackly account</p>
+
+<form id="loginForm">
+
+<!-- ROLE -->
+<div class="input-group">
+<label>Login As</label>
+<div class="custom-select" id="customRole">
+    <div class="select-btn">
+        <span id="selectedRole">--- Select Role ---</span>
+        <i class="fas fa-chevron-down"></i>
+    </div>
+
+    <div class="select-menu">
+<div class="option" data-value="Admin">Admin</div>
+<div class="option" data-value="User">User</div>
+    </div>
+
+    <input type="hidden" id="role">
+</div>
+
+<p id="roleError" class="error">Please select a role</p>
+</div>
+
+<!-- EMAIL -->
+<div class="input-group">
+<label>Email Address</label>
+<input type="email" id="email" placeholder="you@example.com">
+<p id="emailError" class="error">Invalid email format</p>
+</div>
+
+<!-- PASSWORD -->
+<div class="input-group">
+<label>Password</label>
+<div class="password-wrapper">
+<input type="password" id="password">
+<span id="togglePass"><i class="fa-solid fa-eye"></i></span>
+</div>
+<p id="passError" class="error">
+Min 8 chars, 1 Upper, 1 Lower, 1 Number & 1 Symbol
+</p>
+</div>
+
+<!-- REMEMBER -->
+<div class="remember-row">
+<label><input type="checkbox"> Remember me</label>
+<a href="404.html" class="forgot-pass-link">Forgot password?</a>
+</div>
+
+<button type="submit" class="btn-primary">
+Login
+</button>
+
+<div class="auth-link">
+Don't have an account?
+<a href="register.html">Register</a>
+</div>
+
+<!-- DEMO -->
+<div class="demo-box">
+<b>Demo Credentials:</b>
+<ul>
+<li>Admin: admin@stackly.com</li>
+<li>User: user@stackly.com</li>
+<li>Password: any password</li>
+</ul>
+</div>
+
+</form>
+
+</div>
+</div>
+
+<script>
+
+/* PRELOADER */
+window.addEventListener("load",()=>{
+setTimeout(()=>{
+document.getElementById("preloader").style.display="none";
+},1000);
+});
+
+/* PASSWORD TOGGLE */
+const password=document.getElementById("password");
+
+document.getElementById("togglePass").onclick=()=>{
+password.type=password.type==="password"?"text":"password";
+};
+
+/* VALIDATION */
+const email=document.getElementById("email");
+const role=document.getElementById("role");
+
+const emailError=document.getElementById("emailError");
+const passError=document.getElementById("passError");
+const roleError=document.getElementById("roleError");
+
+/* ✅ REAL EMAIL REGEX */
+const emailPattern=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/* ✅ STRONG PASSWORD (real websites style) */
+const passPattern=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
+document.getElementById("loginForm").addEventListener("submit",(e)=>{
+
+e.preventDefault();
+
+let valid=true;
+
+/* ROLE CHECK */
+if(role.value===""){
+roleError.style.display="block";
+valid=false;
+}else{
+roleError.style.display="none";
+}
+
+/* EMAIL CHECK */
+if(!emailPattern.test(email.value)){
+emailError.style.display="block";
+valid=false;
+}else{
+emailError.style.display="none";
+}
+
+/* PASSWORD CHECK */
+if(!passPattern.test(password.value)){
+passError.innerText="Min 8 chars, 1 Upper, 1 Lower, 1 Number & 1 Symbol";
+passError.style.display="block";
+valid=false;
+}else{
+passError.style.display="none";
+}
+
+if(!valid) return;
+
+/* ===== SAVE USER DATA ===== */
+
+localStorage.removeItem("userData");
+
+const userData = {
+    email: email.value.trim(),
+    role: role.value.trim(),
+    loginTime: new Date().toISOString()
+};
+
+localStorage.setItem("userData", JSON.stringify(userData));
+localStorage.setItem("isLoggedIn", "true");
+
+alert("Selected Role : " + role.value);
+
+/* ===== REDIRECT ===== */
+if(role.value==="Admin"){
+window.location.href="ae_dashboard.html";
+}else{
+window.location.href="fm_dashboard.html";
+}
+
+});
+
+email.addEventListener("input", () => {
+    emailError.style.display = "none";
+});
+
+password.addEventListener("input", () => {
+    passError.style.display = "none";
+});
+
+/* CUSTOM DROPDOWN */
+const selectBtn = document.querySelector(".select-btn");
+const menu = document.querySelector(".select-menu");
+const options = document.querySelectorAll(".option");
+const selectedRole = document.getElementById("selectedRole");
+
+selectBtn.addEventListener("click", () => {
+    menu.classList.toggle("show");
+});
+
+options.forEach(option => {
+    option.addEventListener("click", () => {
+        selectedRole.textContent = option.dataset.value;
+        role.value = option.dataset.value;
+        roleError.style.display = "none";
+        menu.classList.remove("show");
+    });
+});
+
+document.addEventListener("click", (e) => {
+    if (!document.getElementById("customRole").contains(e.target)) {
+        menu.classList.remove("show");
+    }
+});
+
+</script>
+
+</body>
+</html>
