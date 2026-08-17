@@ -4321,23 +4321,150 @@ document.body.classList.add("loaded")
 },625)
 })
 
-const form=document.getElementById("jobSearchForm")
+const form = document.getElementById("jobSearchForm")
 
-form.addEventListener("submit",(e)=>{
+if(form){
 
-e.preventDefault()
+    form.addEventListener("submit",(e)=>{
 
-const job=document.getElementById("jobTitle").value.trim()
-const loc=document.getElementById("jobLocation").value.trim()
+        e.preventDefault()
 
-if(!job||!loc){
-alert("Please fill both Property Type / Location and Location")
-return
+        const jobInput = document.getElementById("jobTitle")
+        const locInput = document.getElementById("jobLocation")
+
+        const job = jobInput.value.trim()
+        const loc = locInput.value.trim()
+
+
+        /* =========================
+           PROPERTY TYPE / LOCATION
+        ========================= */
+
+        if(job === ""){
+
+            alert("Please enter a property type or location")
+            jobInput.focus()
+            return
+
+        }
+
+        if(job.length < 2){
+
+            alert("Property Type / Location must contain at least 2 characters")
+            jobInput.focus()
+            return
+
+        }
+
+        if(job.length > 50){
+
+            alert("Property Type / Location must not exceed 50 characters")
+            jobInput.focus()
+            return
+
+        }
+
+        /*
+         Allows:
+         Apartment
+         Villa
+         Independent House
+         2 BHK Apartment
+         Commercial Property
+         Chennai
+         T Nagar
+        */
+
+        const jobPattern = /^[A-Za-z0-9][A-Za-z0-9\s&/'().-]*$/
+
+        if(!jobPattern.test(job)){
+
+            alert("Please enter a valid property type or location")
+            jobInput.focus()
+            return
+
+        }
+
+        // Must contain at least one letter
+        if(!/[A-Za-z]/.test(job)){
+
+            alert("Property Type / Location must contain letters")
+            jobInput.focus()
+            return
+
+        }
+
+
+        /* =========================
+           CITY / AREA
+        ========================= */
+
+        if(loc === ""){
+
+            alert("Please enter a city or area")
+            locInput.focus()
+            return
+
+        }
+
+        if(loc.length < 2){
+
+            alert("City / Area must contain at least 2 characters")
+            locInput.focus()
+            return
+
+        }
+
+        if(loc.length > 50){
+
+            alert("City / Area must not exceed 50 characters")
+            locInput.focus()
+            return
+
+        }
+
+        /*
+         Allows:
+         Salem
+         Chennai
+         Coimbatore
+         T Nagar
+         Chinna Thirupathi
+         Anna Nagar-2
+        */
+
+        const locationPattern =
+        /^[A-Za-z0-9][A-Za-z0-9\s.'-]*$/
+
+        if(!locationPattern.test(loc)){
+
+            alert("Please enter a valid city or area")
+            locInput.focus()
+            return
+
+        }
+
+        // Must contain at least one letter
+        if(!/[A-Za-z]/.test(loc)){
+
+            alert("City / Area must contain letters")
+            locInput.focus()
+            return
+
+        }
+
+
+        /* =========================
+           SUCCESS
+        ========================= */
+
+        form.reset()
+
+        window.location.href = "404.html"
+
+    })
+
 }
-
-window.location.href="404.html"
-
-})
 
 const burger=document.querySelector(".hamburger")
 const nav=document.querySelector(".nav-menu")

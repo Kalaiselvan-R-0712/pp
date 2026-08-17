@@ -1817,9 +1817,10 @@ background:linear-gradient(135deg,#F7F0FF,#F7F0FF,#F7F0FF);
 }
 
 .contact-wrapper{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:40px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:48px;
+    align-items:stretch;
 }
 
 .contact-form{
@@ -1850,12 +1851,52 @@ border-radius:30px;
 cursor:pointer;
 }
 
+.contact-map{
+    display:flex;
+    flex-direction:column;
+    height:100%;
+    min-height:0;
+}
+
+.map-heading{
+    margin:0 0 18px;
+    padding:0;
+}
+
+.map-heading h2{
+    margin:0 0 4px;
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-size:32px;
+    line-height:1.2;
+    font-weight:800;
+    color:#111827;
+    letter-spacing:-0.5px;
+}
+
+.map-heading p{
+    margin:0;
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-size:16px;
+    line-height:1.5;
+    font-weight:500;
+    color:#64748B;
+}
+
 .contact-map iframe{
-width:100%;
-height:100%;
-min-height:420px;
-border:0;
-border-radius:14px;
+    display:block;
+    width:100%;
+    flex:1;
+    min-height:0;
+    height:auto;
+    border:0;
+    border-radius:14px;
+    box-shadow:0 15px 40px rgba(167,15,249,.12);
+    transition:transform .4s ease, box-shadow .4s ease;
+}
+
+.contact-map:hover iframe{
+    transform:scale(1.01);
+    box-shadow:0 20px 45px rgba(167,15,249,.20);
 }
 
 
@@ -2028,6 +2069,74 @@ width:100%;
     color: black ;
 }
 
+.map-content{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.map-content h2{
+    margin:0;
+    font-size:32px;
+    font-weight:800;
+    color:#111827;
+}
+
+.map-content p{
+    margin:0 0 8px;
+    font-size:17px;
+    color:#64748b;
+}
+
+.map-container{
+    width:100%;
+    height:650px;
+    overflow:hidden;
+    border-radius:22px;
+    background:#fff;
+    box-shadow:0 15px 40px rgba(167,15,249,.12);
+}
+
+@media(max-width:768px){
+    .map-content h2{
+        font-size:26px;
+    }
+
+    .map-content p{
+        font-size:15px;
+    }
+
+    .map-container{
+        height:400px;
+    }
+}
+
+@media(max-width:992px){
+
+    .contact-wrapper{
+        grid-template-columns:1fr;
+        gap:40px;
+    }
+
+    .contact-map{
+        height:auto;
+    }
+
+    .contact-map iframe{
+        min-height:420px;
+        flex:none;
+        height:420px;
+    }
+
+    .map-heading h2{
+        font-size:28px;
+    }
+
+    .map-heading p{
+        font-size:15px;
+    }
+}
+
 </style>
 </head>
 
@@ -2128,7 +2237,7 @@ width:100%;
 <div class="contact-form">
 <h2>Send us a Message</h2>
 
-<form id="contactForm">
+<form id="contactForm" autocomplete="off">
 
 <div class="form-group">
 <input type="text" placeholder="Your Name" required>
@@ -2153,13 +2262,19 @@ Send Message
 </form>
 </div>
 
-
 <div class="contact-map">
-<iframe
-src="https://www.google.com/maps?q=MMR+Complex,+Chinna+Thirupathi,+Near+Chinna+Muniyappan+Kovil,+Salem,+Tamil+Nadu+636008&output=embed"
-loading="lazy"
-allowfullscreen>
-</iframe>
+
+    <div class="map-heading">
+        <h2>Visit Us</h2>
+        <p>Our Office Location</p>
+    </div>
+
+    <iframe
+        src="https://www.google.com/maps?q=MMR+Complex,+Chinna+Thirupathi,+Near+Chinna+Muniyappan+Kovil,+Salem,+Tamil+Nadu+636008&output=embed"
+        loading="lazy"
+        allowfullscreen>
+    </iframe>
+
 </div>
 
 </div>
@@ -2392,85 +2507,113 @@ document.getElementById("contactForm")
 
 if(contactForm){
 
-contactForm.addEventListener("submit",(e)=>{
+    contactForm.addEventListener("submit",(e)=>{
 
-e.preventDefault()
+        e.preventDefault()
 
-const nameInput =
-contactForm.querySelector('input[placeholder="Your Name"]')
+        const nameInput =
+        contactForm.querySelector('input[placeholder="Your Name"]')
 
-const emailInput =
-contactForm.querySelector('input[placeholder="Your Email"]')
+        const emailInput =
+        contactForm.querySelector('input[placeholder="Your Email"]')
 
-const subjectInput =
-contactForm.querySelector('input[placeholder="Subject"]')
+        const subjectInput =
+        contactForm.querySelector('input[placeholder="Subject"]')
 
-const messageInput =
-contactForm.querySelector("textarea")
+        const messageInput =
+        contactForm.querySelector("textarea")
 
-const name = nameInput.value.trim()
-const email = emailInput.value.trim()
-const subject = subjectInput.value.trim()
-const message = messageInput.value.trim()
+        const name = nameInput.value.trim()
+        const email = emailInput.value.trim()
+        const subject = subjectInput.value.trim()
+        const message = messageInput.value.trim()
 
-// PATTERNS
+        // PATTERNS
 
-const namePattern =
-/^[A-Za-z\s]{3,30}$/
+        const namePattern =
+        /^[A-Za-z\s]{3,30}$/
 
-const emailPattern =
-/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/
+        const emailPattern =
+        /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/
 
-const subjectPattern =
-/^[A-Za-z0-9\s.,!?'-]{3,50}$/
+        const subjectPattern =
+        /^[A-Za-z0-9\s.,!?'-]{3,50}$/
 
-// NAME
 
-if(!namePattern.test(name)){
-alert("Name should contain only letters and spaces")
-nameInput.focus()
-return
+        // NAME
+
+        if(!namePattern.test(name)){
+            alert("Name should contain only letters and spaces")
+            nameInput.focus()
+            return
+        }
+
+
+        // EMAIL
+
+        if(!emailPattern.test(email)){
+            alert("Please enter a valid email")
+            emailInput.focus()
+            return
+        }
+
+
+        // SUBJECT
+
+        if(!subjectPattern.test(subject)){
+            alert("Please enter a valid subject")
+            subjectInput.focus()
+            return
+        }
+
+
+        // Subject must contain at least one letter
+
+        if(!/[A-Za-z]/.test(subject)){
+            alert("Subject must contain at least one letter")
+            subjectInput.focus()
+            return
+        }
+
+
+        // MESSAGE
+
+        if(message.length < 10){
+            alert("Message should be at least 10 characters")
+            messageInput.focus()
+            return
+        }
+
+
+        // SUCCESS
+
+        // Clear form immediately
+        contactForm.reset();
+
+        // Tell contact page that submission was successful
+        sessionStorage.setItem("contactFormSubmitted", "true");
+
+        // Redirect
+        window.location.href = "404.html";
+
+    })
+
 }
 
-// EMAIL
 
-if(!emailPattern.test(email)){
-alert("Please enter a valid email")
-emailInput.focus()
-return
-}
+// CLEAR FORM WHEN RETURNING FROM 404 PAGE
 
-// SUBJECT
+window.addEventListener("pageshow", () => {
 
-if(!subjectPattern.test(subject)){
-alert("Please enter a valid subject")
-subjectInput.focus()
-return
-}
+    if(sessionStorage.getItem("contactFormSubmitted") === "true"){
 
-// Subject must contain at least one letter
+        contactForm.reset();
 
-if(!/[A-Za-z]/.test(subject)){
-alert("Subject must contain at least one letter")
-subjectInput.focus()
-return
-}
+        sessionStorage.removeItem("contactFormSubmitted");
 
-// MESSAGE
+    }
 
-if(message.length < 10){
-alert("Message should be at least 10 characters")
-messageInput.focus()
-return
-}
-
-// SUCCESS
-
-window.location.href = "404.html"
-
-})
-
-}
+});
 
 </script>
 
